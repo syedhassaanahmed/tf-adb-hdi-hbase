@@ -74,6 +74,7 @@ resource "azurerm_hdinsight_hbase_cluster" "hbase" {
     is_default           = true
   }
 
+  # The VM sizes were chosen to be cheapest possible for each role
   roles {
     head_node {
       vm_size            = "standard_e2s_v3"
@@ -115,13 +116,14 @@ resource "null_resource" "setup_hbase" {
   }
 
   provisioner "local-exec" {
+    interpreter = ["/bin/bash", "-c"]
     environment = {
       HDI_SSH_ENDPOINT = "${var.hdi_ssh_username}@${azurerm_hdinsight_hbase_cluster.hbase.ssh_endpoint}"
       HDI_SSH_PASSWORD = random_password.hdi.result
       SETUP_HBASE      = file(local.setup_hbase)
     }
     command = <<EOF
-      set -eu
+      set -Eeuo pipefail
 
       sshpass -p "$HDI_SSH_PASSWORD" \
         ssh -o StrictHostKeyChecking=no $HDI_SSH_ENDPOINT "echo -e \"$SETUP_HBASE\" | hbase shell -n"

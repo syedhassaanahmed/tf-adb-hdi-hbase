@@ -24,8 +24,9 @@ org.apache.hbase:hbase-server:2.3.1
 ## Azure resources
 - Virtual Network
 - Blob Storage
-- HDInsight HBase cluster
 - Azure Databricks Workspace
+- HDInsight HBase cluster
+>**Note:** The HBase cluster is provisioned with cheapest possible VMs for Head, Region and Zookeeper nodes. It will cost you ~$550 / month in Western Europe.
 
 ## Smoke Test
-Once `terraform apply` has succeeded, navigate to the Databricks workspace and run the notebook `/Shared/TestHBase.scala`. This notebook connects to the HBase cluster and loads `Contacts` table into a dataframe. This table was populated into HBase as part of the Terraform provisioning.
+Once `terraform apply` has succeeded, navigate to the Databricks workspace and run the notebook `/Shared/TestHBase.scala`. This notebook connects to the HBase cluster and loads `Contacts` table into a `DataFrame`. This table was populated into HBase as part of the Terraform provisioning.
