@@ -1,9 +1,8 @@
 # tf-adb-hdi-hbase
 ![Terraform](https://github.com/syedhassaanahmed/tf-adb-hdi-hbase/workflows/Terraform/badge.svg)
 
-This Terraform template shows an E2E demonstration of how to connect from Azure Databricks to an HDInsight HBase cluster using the [hbase-spark](https://github.com/apache/hbase-connectors/tree/master/spark) connector.
+This Terraform template shows an E2E demonstration of how to connect from Azure Databricks to an HDInsight HBase cluster using the [hbase-spark](https://github.com/apache/hbase-connectors/tree/master/spark) connector. In doing so it takes care of the following caveats;
 
-## Caveats
 - The [Hortwonworks shc](https://github.com/hortonworks-spark/shc) connector is broken on Databricks, see [this issue](https://stackoverflow.com/questions/58306725/how-to-write-to-hbase-in-azure-databricks).
 - `hbase-spark` and `shc` have some subtle but important differences in package and data source names. Correct usage can be seen in this [example published by Cloudera](https://docs.cloudera.com/runtime/7.2.1/managing-hbase/topics/hbase-example-using-hbase-spark-connector.html).
 - Databricks and HDInsight HBase must be provisioned in the same VNET.
@@ -15,6 +14,9 @@ org.apache.hbase.connectors.spark:hbase-spark:1.0.0
 org.apache.hbase:hbase-common:2.3.1
 org.apache.hbase:hbase-server:2.3.1
 ```
+
+## Known Issue(s)
+- [HBASE-22769: Runtime Error when a filter is applied](https://issues.apache.org/jira/browse/HBASE-22769)
 
 ## Requirements
 - [Terraform](https://www.terraform.io/downloads.html)
